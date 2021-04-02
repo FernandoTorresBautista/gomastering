@@ -9,6 +9,8 @@ import (
 	"syscall"
 )
 
+// the hidra chat is a microservice
+
 var logger = hlogger.GetInstance()
 
 func Run(connection string) error {
