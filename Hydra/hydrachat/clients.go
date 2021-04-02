@@ -9,18 +9,18 @@ import (
 type client struct {
 	*bufio.Reader
 	*bufio.Writer
-	wc chan string // witch client is 
+	wc chan string // witch client is
 }
 
-// pipeline pattern stage 1: 
+// pipeline pattern stage 1:
 // whe we start a new client
 //		cuando sea que nosotros mandemos un mensaje recibido por un cliente al chat room
-// 
+//
 
 //func StartClient(msgCh chan<- string, cn net.Conn, quit chan struct{}) (chan<- string, <-chan struct{}) {
-func StartClient(msgCh chan<- string, cn io.ReadWriteCloser, quit chan struct{}) (chan<- string, <-chan struct{}) { // TCP connection 
+func StartClient(msgCh chan<- string, cn io.ReadWriteCloser, quit chan struct{}) (chan<- string, <-chan struct{}) { // TCP connection
 	c := new(client)
-	c.Reader = bufio.NewReader(cn) // the client connection 
+	c.Reader = bufio.NewReader(cn) // the client connection
 	c.Writer = bufio.NewWriter(cn)
 	c.wc = make(chan string)
 	done := make(chan struct{})
@@ -41,7 +41,7 @@ func StartClient(msgCh chan<- string, cn io.ReadWriteCloser, quit chan struct{})
 	go func() {
 		select {
 		case <-quit:
-			cn.Close()
+			cn.Close() // tcp channel that represents the connection with the server
 		case <-done:
 		}
 	}()
@@ -49,8 +49,8 @@ func StartClient(msgCh chan<- string, cn io.ReadWriteCloser, quit chan struct{})
 	return c.wc, done
 }
 
-// 
-// 
+//
+//
 func (c *client) writeMonitor() {
 	go func() {
 		for s := range c.wc {

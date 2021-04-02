@@ -11,14 +11,16 @@ import (
 
 var logger = hlogger.GetInstance()
 
-func Run() error {
-	l, err := net.Listen("tcp", ":2100")
-	r := CreateRoom("HydraChat")
+func Run(connection string) error {
+	//l, err := net.Listen("tcp", ":2100")
+	l, err := net.Listen("tcp", connection)
 	if err != nil {
 		logger.Println("Error connecting to chat client", err)
 		return err
 	}
-	go func(l net.Listener) {
+	r := CreateRoom("HydraChat")
+	//
+	/*go func(l net.Listener) {
 		for {
 			conn, err := l.Accept()
 			if err != nil {
@@ -27,12 +29,13 @@ func Run() error {
 			}
 			go handleConnection(r, conn)
 		}
-	}(l)
+	}(l)*/
 
+	// clean up the resources and signal the exiting
 	go func() {
 		// Handle SIGINT and SIGTERM.
-		ch := make(chan os.Signal)
-		signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM)
+		ch := make(chan os.Signal)                         //
+		signal.Notify(ch, syscall.SIGINT, syscall.SIGTERM) // interrup or end...
 		<-ch
 
 		l.Close()
@@ -43,7 +46,17 @@ func Run() error {
 		}
 		os.Exit(0)
 	}()
-	return nil
+
+	//
+	for {
+		conn, err := l.Accept()
+		if err != nil {
+			logger.Println("Error acceptins connection from chat client: ", err)
+		}
+		go handleConnection(r, conn) //
+	}
+
+	return err
 }
 
 func handleConnection(r *room, c net.Conn) {
