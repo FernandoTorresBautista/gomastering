@@ -10,6 +10,8 @@ import (
 
 const (
 	CUSTOM uint8 = iota
+	JSON
+	XML
 )
 
 // global error
@@ -30,6 +32,10 @@ func GetConfiguration(confType uint8, obj interface{}, filename string) (err err
 	switch confType {
 	case CUSTOM:
 		err = MarshalCustomConfig(mysRValue, filename)
+	case JSON:
+		err = decodeJSONConfig(obj, filename)
+	case XML:
+		err = decodeXMLConfig(obj, filename)
 	}
 	return err
 }
