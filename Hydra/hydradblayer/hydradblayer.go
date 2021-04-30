@@ -15,7 +15,7 @@ var errtype = errors.New("Database Type not found... ")
 type DBLayer interface {
 	AddMember(cm *CrewMember) error
 	FindMember(id int) (CrewMember, error)
-	AllMembers()(crew,error)
+	AllMembers() (crew, error)
 }
 
 type CrewMember struct {

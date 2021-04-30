@@ -1,2 +1,5 @@
 # ignore git  
 hydralogger.log
+
+Hydra/go.mod
+Hydra/go.sum

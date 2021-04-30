@@ -1,10 +1,15 @@
 package hydradblayer
 
-/*import "math/rand"
-
+import (
+	"fmt"
+	"math/rand"
+	"testing"
+	"time"
+)
 
 func BenchmarkSQLDBReads(b *testing.B) {
-	dblayer, err := ConnectionDabatase("mysql", "gouser:gouser@/Hydra")
+	fmt.Println("test...")
+	dblayer, err := ConnectDatabase("mysql", "root:root@/hydra")
 	if err != nil {
 		b.Fatal("Could not connect to Hydra chat system: ", err)
 	}
@@ -13,5 +18,5 @@ func BenchmarkSQLDBReads(b *testing.B) {
 
 func findMembersMB(b *testing.B, dblayer DBLayer) {
 	rand.Seed(time.Now().UnixNano())
-
-}*/
+	fmt.Println(dblayer.FindMember(1))
+}
