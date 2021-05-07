@@ -1,4 +1,4 @@
-package HydraConfigurator
+package hydraconfigurator
 
 import (
 	"bufio"
@@ -38,33 +38,25 @@ func (f ConfigFields) Add(name, value, t string) error {
 	return nil
 }
 
-func MarshalCustomConfig(v reflect.Value, filename string) error {
-	defer func() {
-		if r := recover(); r != nil {
-			fmt.Println("panic ocurred: ", r)
-		}
-	}()
-
+func marshalCustomConfig(v reflect.Value, filename string) error {
 	if !v.CanSet() {
 		return errors.New("Value passed not settable")
 	}
 
-	file, err := os.Open(filename) // for reading
+	file, err := os.Open(filename)
 	if err != nil {
 		return err
 	}
 	defer file.Close()
-	fields := make(ConfigFields)      // make(map[string]reflect.Value)
-	scanner := bufio.NewScanner(file) // scanner read ine by line
-	for scanner.Scan() {              // each iteration is a single line
+
+	fields := make(ConfigFields)
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
 		line := scanner.Text()
 		fmt.Println("Processing line", line)
-		if strings.Count(line, "|") != 1 || strings.Count(line, ";") != 1 {
-			continue
-		}
-		args := strings.Split(line, "|") // separate the parts of the line in arguments
+		args := strings.Split(line, "|")
 		name := args[0]
-		valuetype := strings.Split(args[1], ";") // separate the laste element from the type of the value
+		valuetype := strings.Split(args[1], ";")
 		name, value, vtype := strings.TrimSpace(name), strings.TrimSpace(valuetype[0]), strings.ToUpper(strings.TrimSpace(valuetype[1]))
 		fields.Add(name, value, vtype)
 	}

@@ -27,10 +27,11 @@ type CrewMember struct {
 
 type crew []CrewMember
 
+// ConnectDatabase connects to a database type o using the provider connection string
 func ConnectDatabase(o string, cstring string) (DBLayer, error) {
 	switch o {
-	case MONGO:
-		return NewMongoStore(cstring)
+	//case MONGO:
+	//	return NewMongoStore(cstring)
 	case MYSQL:
 		return NewMySQLDataStore(cstring)
 	}

@@ -1,5 +1,6 @@
 package hydradblayer
 
+/*
 import (
 	"log"
 
@@ -48,3 +49,4 @@ func (ms *mongoDataStore) AllMembers() (crew, error) {
 	err := personnel.Find(nil).All(&members)
 	return members, err
 }
+*/

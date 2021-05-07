@@ -1,7 +1,7 @@
 package main
 
 import (
-	"GoMastering/Hydra/HydraConfigurator"
+	"GoMastering/Hydra/hydraconfigutor"
 	"fmt"
 )
 
@@ -16,9 +16,9 @@ type ConfS struct {
 
 func main() {
 	configstruct := new(ConfS)
-	//HydraConfigurator.GetConfiguration(HydraConfigurator.CUSTOM, configstruct, "configfile.conf")
-	//HydraConfigurator.GetConfiguration(HydraConfigurator.JSON, configstruct, "configfile.json")
-	HydraConfigurator.GetConfiguration(HydraConfigurator.XML, configstruct, "configfile.xml")
+	//hydraconfigutor.GetConfiguration(hydraconfigutor.CUSTOM, configstruct, "configfile.conf")
+	//hydraconfigutor.GetConfiguration(hydraconfigutor.JSON, configstruct, "configfile.json")
+	hydraconfigutor.GetConfiguration(hydraconfigutor.XML, configstruct, "configfile.xml")
 	fmt.Println(*configstruct)
 
 	if configstruct.TB {

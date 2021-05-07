@@ -1,5 +1,7 @@
 package main
 
+//
+/*
 import (
 	"GoMastering/Hydra/hlogger"
 	"fmt"
@@ -29,3 +31,4 @@ func sroot(w http.ResponseWriter, r *http.Request) {
 
 	logger.Println("Received an http request on root url")
 }
+*/

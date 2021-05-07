@@ -1,4 +1,4 @@
-package HydraConfigurator
+package hydraconfigurator
 
 import (
 	"encoding/json"
